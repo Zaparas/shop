@@ -1,6 +1,13 @@
+global using Microsoft.EntityFrameworkCore;
+
+using Backend.Data;
+using Backend.Services.Customers;
+using Backend.Services.Products;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddScoped<IProductService, ProductsService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddDbContext<DataContext>(options =>
