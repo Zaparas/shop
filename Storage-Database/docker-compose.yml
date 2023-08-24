@@ -1,0 +1,12 @@
+version: "1.0"
+services:
+
+  sql-server-db:
+    container_name: sql-server-db
+    hostname: sql-smelly-cat
+    image: bitwarden/mssql:latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "pass123!"
+      ACCEPT_EULA: "Y"
