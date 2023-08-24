@@ -9,8 +9,13 @@
 * Step 1.B: Use the command > docker compose up -d
 * Step 2: Run the project using > dotnet watch run
 
+# Usefull Commands:
+* Start the project : from the Backend Folder > dotnet watch run
+* Create & Start DB : from the Storage Datbase Folder > docker compose up -d 
+* Update Databases  : from the Backend Folder > dotnet ef database update
 
-# Manual Installations required:
+
+# Packages used:
 * dotnet add package Microsoft.EntityFrameworkCore
 * dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 * dotnet add package Microsoft.EntityFrameworkCore.Design
