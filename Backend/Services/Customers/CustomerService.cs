@@ -73,39 +73,38 @@ namespace Backend.Services.Customers
             return await _data.Customers.ToListAsync();
         }
 
-        public async Task<List<Purchase>> MakePurchase(int customerID, PurchaseInputDto purchaseInput)
-        {
-            // Validate that all ProductIds exist in the database
-            var validProductIds = _data.Products.Select(p => p.Id).ToList();
-            var invalidProductIds = purchaseInput.ProductIds.Except(validProductIds).ToList();
-
-            if (invalidProductIds.Any())
+        public async Task<Purchase> MakePurchase(int customerID, PurchaseInputDto purchaseInput)
             {
-                throw new ArgumentException($"The following product IDs are invalid: {string.Join(", ", invalidProductIds)}");
-            }
+                // Validate that all ProductIds exist in the database
+                var validProductIds = _data.Products.Select(p => p.Id).ToList();
+                var invalidProductIds = purchaseInput.ProductIds.Except(validProductIds).ToList();
 
-            // First, create and save the Purchase
-            var newPurchase = new Purchase(customerID);
-            _data.Purchases.Add(newPurchase);
-            await _data.SaveChangesAsync();  // Change to async save
-
-            // Now, use the generated ID to create PurchaseProduct records
-            newPurchase.PurchasedProducts = new List<PurchaseProduct>();  // List to store all PurchaseProduct objects
-            for (int i = 0; i < purchaseInput.ProductIds.Count; i++)
-            {
-                var purchaseProduct = new PurchaseProduct
+                if (invalidProductIds.Any())
                 {
-                    PurchaseId = newPurchase.Id,  // Use the generated ID here
-                    ProductId = purchaseInput.ProductIds[i],
-                    Quantity = purchaseInput.Quantities[i]
-                };
-                newPurchase.PurchasedProducts.Add(purchaseProduct); // Add the created PurchaseProduct to the list
+                    throw new ArgumentException($"The following product IDs are invalid: {string.Join(", ", invalidProductIds)}");
+                }
+
+                // First, create and save the Purchase to get ID 
+                var newPurchase = new Purchase(customerID);
+                _data.Purchases.Add(newPurchase);
+                await _data.SaveChangesAsync();  
+
+                // Add PurchaseProduct records
+                newPurchase.PurchasedProducts = new List<PurchaseProduct>(); 
+                for (int i = 0; i < purchaseInput.ProductIds.Count; i++)
+                {
+                    var purchaseProduct = new PurchaseProduct
+                    {
+                        PurchaseId = newPurchase.Id,  
+                        ProductId = purchaseInput.ProductIds[i],
+                        Quantity = purchaseInput.Quantities[i]
+                    };
+                    newPurchase.PurchasedProducts.Add(purchaseProduct);
+                }
+
+                await _data.SaveChangesAsync();
+
+                return newPurchase;  // Return only the newly created purchase
             }
-
-            // _data.PurchaseProducts.AddRange(purchasedProducts); // Add the entire list to the DbSet
-            await _data.SaveChangesAsync();
-
-            return await _data.Purchases.ToListAsync();
-        }
     }
 }

@@ -15,6 +15,6 @@ namespace Backend.Services.Customers
         Task<Customer?> GetCustomerById(int id);
         Task<List<Customer>> UpdateCustomer(UpdateCustomerDto product);
         Task<List<Customer>> DeleteCustomerById(int id);
-        Task<List<Purchase>> MakePurchase(int customerID,PurchaseInputDto PurchasedProducts);
+        Task<Purchase> MakePurchase(int customerID,PurchaseInputDto PurchasedProducts);
     }
 }
