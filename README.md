@@ -5,12 +5,15 @@
 
 # Getting started:
 * Step 1: build and start the database:
-* Step 1.a: Use the command > docker compose up
+* Step 1.A: Start Docker service on your machine
+* Step 1.B: Use the command > docker compose up -d
+* Step 2: Run the project using > dotnet watch run
 
 
 # Manual Installations required:
 * dotnet add package Microsoft.EntityFrameworkCore
 * dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+* dotnet add package Microsoft.EntityFrameworkCore.Design
 
 
 # special thanks to: 
