@@ -35,4 +35,4 @@ From within the Backend Folder:
 | -------------  |:-------------:|:-------------: |
 | 2023 August    | https://mahedee.net/how-to-connet-sql-server-from-docker-using-ssms/   | helped find server name - proper naming in general is important name was port |
 | 2023 August    | https://stackoverflow.com/questions/43098065/entity-framework-core-dbcontextoptionsbuilder-does-not-contain-a-definition-for | Helped find need for SqlServer lib
-| left baz       | right baz     |
+
